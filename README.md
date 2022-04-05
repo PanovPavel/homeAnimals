@@ -4,7 +4,7 @@
   <summary>MySql script</summary>
 
 
-
+```sql
 create database IF NOT EXISTS domestic_animal_db;
 
 use domestic_animal_db;
@@ -74,6 +74,6 @@ create table person_pet(
     foreign key(pet_id) references domestic_animal_db.pet(id),
 	foreign key(person_id) references domestic_animal_db.person(id)
 );
-  
+``` 
     
 </details>
