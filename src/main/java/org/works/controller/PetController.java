@@ -22,8 +22,8 @@ public class PetController {
         return petDao.get(id);
     }
     @PostMapping("/api/pet")
-    public Pet savePet(@RequestBody Pet pet){
-        return petDao.saveOrUpdate(pet);
+    public void savePet(@RequestBody Pet pet){
+        petDao.saveOrUpdate(pet);
     }
     @DeleteMapping("/api/pet/{id}")
     public void deletePet(@PathVariable int id){

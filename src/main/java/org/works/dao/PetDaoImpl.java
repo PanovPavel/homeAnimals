@@ -27,7 +27,7 @@ public class PetDaoImpl implements Dao<Pet>{
     }
 
     @Override
-    public Pet saveOrUpdate(Pet pet) {
+    public void saveOrUpdate(Pet pet) {
         if (pet.getId() == 0){
             jdbcTemplate.update("insert pet(type_pet_id, weight, color, nickname) values (?, ?, ?, ?)",
                     pet.getTypePet().getId(), pet.getWeight(), pet.getColor(), pet.getNickname());
@@ -36,7 +36,6 @@ public class PetDaoImpl implements Dao<Pet>{
             jdbcTemplate.update("update pet set type_pet_id = ?, weight = ?, color = ?, nickname = ? WHERE id = ?",
                     pet.getTypePet().getId(), pet.getWeight(), pet.getColor(), pet.getNickname(), pet.getId());
         }
-        return pet;
     }
 
     @Override

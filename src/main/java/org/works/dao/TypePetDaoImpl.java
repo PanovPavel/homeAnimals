@@ -30,14 +30,13 @@ public class TypePetDaoImpl implements Dao<TypePet>{
     }
 
     @Override
-    public TypePet saveOrUpdate(TypePet typePet) {
+    public void saveOrUpdate(TypePet typePet) {
         if (typePet.getId() == 0){
             jdbcTemplate.update("insert type_pet(type_pet) values (?)", typePet.getType());
         }
         else {
             jdbcTemplate.update("update type_pet set type_pet = ? where id = ?", typePet.getType(), typePet.getId());
         }
-        return typePet;
     }
 
     @Override
