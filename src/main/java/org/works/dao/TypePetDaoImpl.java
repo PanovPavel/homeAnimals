@@ -14,6 +14,9 @@ public class TypePetDaoImpl implements Dao<TypePet>{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public TypePetDaoImpl() {
+    }
+
     @Override
     public List<TypePet> getAll() {
         return jdbcTemplate.query("Select * From type_pet", new TypePetMapper());
@@ -27,11 +30,14 @@ public class TypePetDaoImpl implements Dao<TypePet>{
     }
 
     @Override
-    public void saveOrUpdate(TypePet typePet) {
+    public TypePet saveOrUpdate(TypePet typePet) {
         if (typePet.getId() == 0){
             jdbcTemplate.update("insert type_pet(type_pet) values (?)", typePet.getType());
         }
-        else jdbcTemplate.update("update type_pet set type_pet = ? where id = ?", typePet.getType(), typePet.getId());
+        else {
+            jdbcTemplate.update("update type_pet set type_pet = ? where id = ?", typePet.getType(), typePet.getId());
+        }
+        return typePet;
     }
 
     @Override

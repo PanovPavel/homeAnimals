@@ -10,15 +10,12 @@ import java.util.List;
 @Component
 @Data
 public class Pet {
-    int id;
-    private List<TypePet> typePet;
+    private int id;
+    private TypePet typePet;
     private double weight;
     private String color;
     private String nickname;
-    public void addTypePet(TypePet tp){
-        if(typePet == null){
-            typePet = new ArrayList<>();
-        }typePet.add(tp);
-    }
+
+
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 public class TypePetController {
     @Autowired
-    Dao<TypePet> typePetDao;
+    private Dao<TypePet> typePetDao;
 
     @GetMapping("/api/type_pet/{id}")
     public TypePet getTypePet(@PathVariable int id){
