@@ -2,6 +2,7 @@
 
 <details>
   <summary>Задание</summary>
+	
 	1)Spring, реляционная БД, запросы писать самому
 	2)Должны быть несколько типов(видов) питомцев(собаки, кошки, и т.д)
 	3)CRUD для питомцев, людец и видов питомцев
@@ -98,7 +99,7 @@ values
 
 <details>
   <summary>Postman collection</summary>
-	1)https://www.getpostman.com/collections/405a68088f400cff9d35
-	2)https://www.getpostman.com/collections/56d3cc6741eae738818b
-	3)https://www.getpostman.com/collections/f202855c7f8e7bb387ef
-	
+	1)https://www.getpostman.com/collections/405a68088f400cff9d35   <br />
+	2)https://www.getpostman.com/collections/56d3cc6741eae738818b   <br />
+	3)https://www.getpostman.com/collections/f202855c7f8e7bb387ef   <br />
+</details>
