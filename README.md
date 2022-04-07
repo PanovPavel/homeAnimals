@@ -1,6 +1,16 @@
 # homeAnimals
 
 <details>
+  <summary>Задание</summary>
+	1)Spring, реляционная БД, запросы писать самому
+	2)Должны быть несколько типов(видов) питомцев(собаки, кошки, и т.д)
+	3)CRUD для питомцев, людец и видов питомцев
+	4)Должна фиксироваться дата добавления питомца к человеку, и соответственно метод который позволит за период времени увидеть добавленных питомцев к конкретному человеку
+	5)должно быть ограничение на кол-во питомцев одного вида у одного человека
+</details>
+
+
+<details>
   <summary>MySql script</summary>
 
 
@@ -85,3 +95,10 @@ values
 ``` 
     
 </details>
+
+<details>
+  <summary>Postman collection</summary>
+	1)https://www.getpostman.com/collections/405a68088f400cff9d35
+	2)https://www.getpostman.com/collections/56d3cc6741eae738818b
+	3)https://www.getpostman.com/collections/f202855c7f8e7bb387ef
+	
