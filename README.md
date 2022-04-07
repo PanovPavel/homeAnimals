@@ -69,7 +69,7 @@ values
 create table person_pet(
 	pet_id int not null,
     person_id int not null,
-    data DATE not null,
+    data DATETIME not null,
     primary key (pet_id, person_id),
     foreign key(pet_id) references domestic_animal_db.pet(id),
 	foreign key(person_id) references domestic_animal_db.person(id)
