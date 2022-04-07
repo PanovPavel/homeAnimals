@@ -22,19 +22,25 @@ public class PersonExtractor implements ResultSetExtractor<List<Person>>{
         int currentId = 0;
         int i = -1;
         while (rs.next()){
-            Person person = new Person();
-            Pet pet = new Pet();
+            Person person =
+                    new Person(rs.getInt("id"), rs.getString("name"),
+                    rs.getString("surname"), rs.getString("lastname"));
+            Pet pet =
+                    new Pet(rs.getInt("pet.id"), rs.getString("data"),
+                    rs.getDouble("weight"), rs.getString("color"),
+                    rs.getString("nickname"));
             TypePet typePet = new TypePet();
 
-            person.setId(rs.getInt("id"));
-            person.setName(rs.getString("name"));
-            person.setSurname(rs.getString("surname"));
-            person.setLastname(rs.getString("lastname"));
+//            person.setId(rs.getInt("id"));
+//            person.setName(rs.getString("name"));
+//            person.setSurname(rs.getString("surname"));
+//            person.setLastname(rs.getString("lastname"));
 
-            pet.setId(rs.getInt("pet.id"));
-            pet.setWeight(rs.getDouble("weight"));
-            pet.setColor(rs.getString("color"));
-            pet.setNickname(rs.getString("nickname"));
+//            pet.setData(rs.getString("data"));
+//            pet.setId(rs.getInt("pet.id"));
+//            pet.setWeight(rs.getDouble("weight"));
+//            pet.setColor(rs.getString("color"));
+//            pet.setNickname(rs.getString("nickname"));
 
             typePet.setId(rs.getInt("type_pet.id"));
             typePet.setType(rs.getString("type_pet.type_pet"));

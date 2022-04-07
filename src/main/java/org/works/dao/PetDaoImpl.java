@@ -1,13 +1,10 @@
 package org.works.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.works.Pet;
-import org.works.mapper.PetMapper;
-import org.works.mapper.TypePetMapper;
+import org.works.mapper.PetExtractor;
 
 import java.util.List;
 @Repository
@@ -15,15 +12,33 @@ public class PetDaoImpl implements Dao<Pet>{
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    private PetMapper petMapper;
+    private PetExtractor petMapper;
     @Override
     public List<Pet> getAll() {
-        return jdbcTemplate.query("Select * From pet", petMapper);
+        String query =
+                "Select pet.*, person.*, tp.*, person_pet.data\n" +
+                "From pet\n" +
+                "    LEFT  JOIN person_pet\n" +
+                "        ON pet.id = person_pet.pet_id\n" +
+                "    LEFT JOIN person\n" +
+                "        ON person_pet.person_id = person.id\n" +
+                "    LEFT JOIN type_pet tp\n" +
+                "        on pet.type_pet_id = tp.id";
+        return jdbcTemplate.query(query, petMapper);
     }
 
     @Override
     public Pet get(int id) {
-        return jdbcTemplate.queryForObject("Select * From pet Where id = ?", petMapper, new Object[]{id});
+        String query =
+                "Select pet.*, person.*, tp.*, person_pet.data\n" +
+                        "From pet\n" +
+                        "    LEFT  JOIN person_pet\n" +
+                        "        ON pet.id = person_pet.pet_id\n" +
+                        "    LEFT JOIN person\n" +
+                        "        ON person_pet.person_id = person.id\n" +
+                        "    LEFT JOIN type_pet tp\n" +
+                        "        on pet.type_pet_id = tp.id WHERE pet.id = ?;";
+        return jdbcTemplate.query(query, petMapper, new Object[]{id}).get(0);
     }
 
     @Override
