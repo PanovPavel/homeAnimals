@@ -8,7 +8,7 @@ import org.works.mapper.PetExtractor;
 
 import java.util.List;
 @Repository
-public class PetDaoImpl implements Dao<Pet>{
+public class PetDaoImpl implements PetDao{
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -56,5 +56,22 @@ public class PetDaoImpl implements Dao<Pet>{
     @Override
     public void delete(int id) {
         jdbcTemplate.update("delete from pet where id = ?", id);
+    }
+
+    @Override
+    public List<Pet> getTimeIntervalAddPet(int idPerson, String dateStart, String dataEnd) {
+        String start = dateStart;
+        String end = dataEnd;
+        String query =
+                "SELECT *\n" +
+                        "From person_pet\n" +
+                        "    Inner join pet\n" +
+                        "        ON person_pet.pet_id = pet.id\n" +
+                        "    INNER join type_pet tp\n" +
+                        "        on pet.type_pet_id = tp.id\n" +
+                        "    INNER join person\n" +
+                        "        on person_pet.person_id = person.id\n" +
+                        "WHERE data >= "+start+" AND data <= "+end+" AND person_pet.person_id = ?;";
+        return jdbcTemplate.query(query, petMapper, new Object[]{idPerson});
     }
 }

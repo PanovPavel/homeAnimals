@@ -1,10 +1,12 @@
 package org.works.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.works.Pet;
 import org.works.TypePet;
 import org.works.dao.Dao;
+import org.works.dao.PetDao;
 import org.works.dao.PetDaoImpl;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 @RestController
 public class PetController {
     @Autowired
-    private Dao<Pet> petDao;
+    private PetDao petDao;
     @GetMapping("/api/pet")
     public List<Pet> getAllTypePet(){
         return petDao.getAll();
@@ -28,5 +30,9 @@ public class PetController {
     @DeleteMapping("/api/pet/{id}")
     public void deletePet(@PathVariable int id){
         petDao.delete(id);
+    }
+    @GetMapping("/api/pet/rr")
+    public List<Pet> getTimeIntervalAddPet(@RequestParam("id") int id, @RequestParam("start") String start, @RequestParam("end") String end){
+        return petDao.getTimeIntervalAddPet(id, start, end);
     }
 }

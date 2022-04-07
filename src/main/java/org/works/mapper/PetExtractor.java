@@ -29,7 +29,6 @@ public class PetExtractor implements ResultSetExtractor<List<Pet>>{
             TypePet typePet = new TypePet();
 
 
-
 //            person.setId(rs.getInt("person.id"));
 //            person.setName(rs.getString("name"));
 //            person.setSurname(rs.getString("surname"));

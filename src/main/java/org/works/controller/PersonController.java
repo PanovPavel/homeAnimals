@@ -5,11 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.works.Person;
+import org.works.Pet;
 import org.works.dao.Dao;
 import org.works.dao.PersonDao;
 import org.works.exceptions.ConstraintUniquenessQtyTypePetException;
 import org.works.exceptions.JsonMessage;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -40,6 +42,8 @@ public class PersonController {
     public void bindPetPerson(@PathVariable int idPerson, @PathVariable int idPet){
         daoPerson.bindPetInPerson(idPerson, idPet);
     }
+
+
     @ExceptionHandler
     public ResponseEntity<JsonMessage> handlerException(ConstraintUniquenessQtyTypePetException exception){
         JsonMessage jsonMessage = new JsonMessage();
@@ -50,7 +54,7 @@ public class PersonController {
     public ResponseEntity<JsonMessage> handlerException(Exception exception){
         JsonMessage jsonMessage = new JsonMessage();
         jsonMessage.setInfo(exception.getMessage());
-        return new ResponseEntity<>(jsonMessage, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(jsonMessage, HttpStatus.BAD_REQUEST);
     }
 
 }

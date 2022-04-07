@@ -6,8 +6,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.works.Person;
+import org.works.Pet;
 import org.works.exceptions.ConstraintUniquenessQtyTypePetException;
 import org.works.mapper.PersonExtractor;
+import org.works.mapper.PetExtractor;
 
 import javax.management.Query;
 import javax.swing.tree.RowMapper;
@@ -17,9 +19,9 @@ import java.util.List;
 @Repository
 public class PersonDaoImpl implements PersonDao {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     @Autowired
-    PersonExtractor personMapper;
+    private PersonExtractor personMapper;
     @Override
     public List<Person> getAll() {
         String query =
@@ -73,6 +75,7 @@ public class PersonDaoImpl implements PersonDao {
         int countTypePetInOnePerson;
         Person person = new Person();
         String query =
+                //сложить нормально
                 "SELECT count(*) AS 'qua'\n" +
                         "from person_pet\n" +
                         "    INNER JOIN pet\n" +
@@ -90,8 +93,5 @@ public class PersonDaoImpl implements PersonDao {
         }else jdbcTemplate.update("insert person_pet(person_id, pet_id, data) VALUE(?, ?, now())", idPerson, idPet);
     }
 
-    @Override
-    public void getTimeIntervalAddPet(Date dateStart, Date dataEnd) {
 
-    }
 }
