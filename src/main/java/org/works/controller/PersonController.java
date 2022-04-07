@@ -10,6 +10,7 @@ import org.works.dao.Dao;
 import org.works.dao.PersonDao;
 import org.works.exceptions.ConstraintUniquenessQtyTypePetException;
 import org.works.exceptions.JsonMessage;
+import org.works.service.PersonService;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 public class PersonController {
     @Autowired
-    PersonDao daoPerson;
+    private PersonService daoPerson;
 
     @GetMapping("/api/person")
     public List<Person> getAllPerson(){

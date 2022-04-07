@@ -25,7 +25,6 @@ public class TypePetDaoImpl implements Dao<TypePet>{
     @Override
     public TypePet get(int id) {
         String query = "Select * From type_pet Where id=?";
-        //Добавить IncorrectResultSetColumnCountException
         return jdbcTemplate.queryForObject(query,  new TypePetMapper(), new Object[]{id});
     }
 

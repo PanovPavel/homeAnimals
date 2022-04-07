@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.works.TypePet;
 import org.works.dao.Dao;
+import org.works.service.Service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
 public class TypePetController {
     @Autowired
-    private Dao<TypePet> typePetDao;
+    private Service<TypePet> typePetDao;
 
     @GetMapping("/api/type_pet/{id}")
     public TypePet getTypePet(@PathVariable int id){

@@ -2,18 +2,12 @@ package org.works.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.works.Person;
-import org.works.Pet;
 import org.works.exceptions.ConstraintUniquenessQtyTypePetException;
+import org.works.exceptions.ObjectNotExitDatabaseForUpdateException;
 import org.works.mapper.PersonExtractor;
-import org.works.mapper.PetExtractor;
-
-import javax.management.Query;
-import javax.swing.tree.RowMapper;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -49,7 +43,7 @@ public class PersonDaoImpl implements PersonDao {
                         "         left JOIN type_pet\n" +
                         "                    ON pet.type_pet_id = type_pet.id\n" +
                         "        WHERE a.id = ?;";
-        return jdbcTemplate.query(query,personMapper, new Object[]{id}).get(0);
+        return jdbcTemplate.query(query,personMapper, new Object[]{id}).stream().findAny().orElse(null);
     }
 
 
@@ -60,6 +54,10 @@ public class PersonDaoImpl implements PersonDao {
                     person.getName(), person.getSurname(), person.getLastname());
         }
         else{
+            int availability = jdbcTemplate.queryForObject("select count(*) from person where id = ?", Integer.class, new Object[]{person.getId()});
+            if(availability == 0){
+                throw new ObjectNotExitDatabaseForUpdateException("The object with the specified id is not in the database");
+            }
             jdbcTemplate.update("update person set name = ?, surname = ?, lastname = ? WHERE id = ?",
                     person.getName(), person.getSurname(), person.getLastname(), person.getId());
         }
@@ -67,6 +65,11 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public void delete(int id) {
+        Person person = new Person();
+        int availability = jdbcTemplate.queryForObject("select count(*) from person where id = ?", Integer.class, new Object[]{person.getId()});
+        if(availability == 0){
+            throw new ObjectNotExitDatabaseForUpdateException("The object with the specified id is not in the database");
+        }
         jdbcTemplate.update("delete from person where id = ?", id);
     }
 

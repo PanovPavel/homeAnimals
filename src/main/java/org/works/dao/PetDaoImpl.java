@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.works.Pet;
+import org.works.exceptions.ObjectNotExitDatabaseForUpdateException;
 import org.works.mapper.PetExtractor;
 
 import java.util.List;
@@ -38,16 +39,23 @@ public class PetDaoImpl implements PetDao{
                         "        ON person_pet.person_id = person.id\n" +
                         "    LEFT JOIN type_pet tp\n" +
                         "        on pet.type_pet_id = tp.id WHERE pet.id = ?;";
-        return jdbcTemplate.query(query, petMapper, new Object[]{id}).get(0);
+        return jdbcTemplate.query(query, petMapper, new Object[]{id}).stream().findAny().orElse(null);
     }
 
     @Override
     public void saveOrUpdate(Pet pet) {
+
+
         if (pet.getId() == 0){
             jdbcTemplate.update("insert pet(type_pet_id, weight, color, nickname) values (?, ?, ?, ?)",
                     pet.getTypePet().getId(), pet.getWeight(), pet.getColor(), pet.getNickname());
         }
         else{
+            Pet pets = new Pet();
+            int availability = jdbcTemplate.queryForObject("select count(*) from pet where id = ?", Integer.class, new Object[]{pets.getId()});
+            if(availability == 0){
+                throw new ObjectNotExitDatabaseForUpdateException("The object with the specified id is not in the database");
+            }
             jdbcTemplate.update("update pet set type_pet_id = ?, weight = ?, color = ?, nickname = ? WHERE id = ?",
                     pet.getTypePet().getId(), pet.getWeight(), pet.getColor(), pet.getNickname(), pet.getId());
         }
@@ -55,6 +63,11 @@ public class PetDaoImpl implements PetDao{
 
     @Override
     public void delete(int id) {
+        Pet pets = new Pet();
+        int availability = jdbcTemplate.queryForObject("select count(*) from pet where id = ?", Integer.class, new Object[]{pets.getId()});
+        if(availability == 0){
+            throw new ObjectNotExitDatabaseForUpdateException("The object with the specified id is not in the database");
+        }
         jdbcTemplate.update("delete from pet where id = ?", id);
     }
 
