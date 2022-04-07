@@ -69,11 +69,19 @@ values
 create table person_pet(
 	pet_id int not null,
     person_id int not null,
-    data DATE not null,
+    data DATETIME not null,
     primary key (pet_id, person_id),
     foreign key(pet_id) references domestic_animal_db.pet(id),
 	foreign key(person_id) references domestic_animal_db.person(id)
 );
+insert domestic_animal_db.person_pet(pet_id, person_id, data)
+values
+    (3, 1, '2022-04-07 08:39:36'),
+    (1, 1, '2022-04-08 00:00:00'),
+    (8, 1, '2022-04-06 00:00:00'),
+    (6, 2, '2022-04-09 00:00:00'),
+    (6, 4, '2022-04-07 00:00:00'),
+    (7, 5, '2022-04-05 00:00:00');
 ``` 
     
 </details>
